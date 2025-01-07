@@ -52,12 +52,12 @@ class Minesweeper:
         return True
 
     def check_win(self):
-        # Check if all non-mine cells are revealed
-        for y in range(self.height):
-            for x in range(self.width):
-                if (y * self.width + x) not in self.mines and not self.revealed[y][x]:
-                    return False
-        return True
+        total_non_mines = self.width * self.height - len(self.mines)
+        revealed_non_mines = sum(
+            1 for y in range(self.height) for x in range(self.width) 
+            if not (y * self.width + x) in self.mines and self.revealed[y][x]
+        )
+        return revealed_non_mines == total_non_mines
 
     def play(self):
         while True:
